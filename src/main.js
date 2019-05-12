@@ -1,7 +1,10 @@
 import Vue from 'vue'
 import App from './App'
 import router from './router'
+import axios from 'axios'
 
+axios.defaults.baseURL = 'https://wd9086734151cepuuy.wilddogio.com/'
+// https://wd0992259444dcaaxf.wilddogio.com/
 // 定义全局的守卫
 // router.beforeEach((to, from, next) => {
 //   // 保存用户登录状态
