@@ -13,11 +13,11 @@
             <th>删除</th>
           </tr>
         </thead>
-        <tbody>
+        <tbody v-for="item in getMuntItems" :key="item.id">
           <tr>
-            <td>榴莲Pizza</td>
+            <td>{{item.name}}</td>
             <td>
-              <button class="btn btn-sm btn-outline-danaer">&times;</button>
+              <button @click="deleteData(item)" class="btn btn-sm btn-outline-danaer">&times;</button>
             </td>
           </tr>
         </tbody>
@@ -26,28 +26,58 @@
   </div>
 </template>
 <script>
-import NewPizza from "./NewPizza";
+  import NewPizza from "./NewPizza";
   export default {
     data() {
       return {
-        name: 'zhansan'
+        // getMuntItems: []
       }
     },
-    components:{
-      'app-new-pizza':NewPizza
+    components: {
+      'app-new-pizza': NewPizza
+    },
+    created() {
+      fetch('https://wd9086734151cepuuy.wilddogio.com/menu.json')
+        .then(res => res.json())
+        .then(data => {
+          let menuArray = []
+          for (let key in data) {
+            data[key].id = key
+            menuArray.push(data[key])
+          }
+          // this.getMuntItems = menuArray
+          this.$store.commit('setMenuItems', menuArray)
+        })
+    },
+    methods: {
+      deleteData(item) {
+        fetch(`https://wd9086734151cepuuy.wilddogio.com/menu/${item.id}/.json`, {
+            method: 'DELETE',
+            headers: {
+              "Content-type": 'application/json'
+            }
+          })
+          .then(res => res.json())
+          .then(data => this.$store.commit('removeMenuItems', item))
+        // .then(data => this.$router.push({
+        //   name: "adminLink"
+        // }))
+      }
+    },
+    computed: {
+      // getMuntItems(){
+      //   return this.$store.state.meunItems
+      // }
+      getMuntItems: {
+        get() {
+          // return this.$store.state.meunItems
+          return this.$store.getters.getMenuItems
+        },
+        set() {
+
+        }
+      }
     }
-    // 进入私有守卫
-    // beforeRouteEnter: (to, from, next) => {
-
-    //   next(vm=>{
-    //     alert('hellow' + vm.name)
-
-    //   });
-    // }
-
-    // beforeRouteLeave:(to, from, next) => {
-
-    // }
   }
 
 </script>

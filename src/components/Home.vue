@@ -5,7 +5,7 @@
         <div class="background">
           <h1>欢迎品尝</h1>
           <h2>pizza!</h2>
-          <button class="btn btn-success mb-3" @click="goToMenu">go</button>
+          <button class="btn btn-success mb-3" @click="goToMenu">去点餐</button>
         </div>
       </div>
     </div>
@@ -24,7 +24,7 @@
         // this.$router.replace('/menu')
         // this.$router.replace({name: 'menuLink'})
         // this.$router.push('/menu')
-        // this.$router.push({path: '/menu'})
+        this.$router.push({path: '/menu'})
       }
     }
   }

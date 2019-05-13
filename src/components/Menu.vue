@@ -63,22 +63,14 @@
       return {
         baskets: [],
         basketsText: '请添加商品',
-        getMenuItems: {
-          1: {
-            'name': '榴莲Pizza',
-            'description': '榴莲最爱',
-            'options': [{
-              'size': 9,
-              'price': 38
-            }, {
-              'size': 12,
-              'price': 48
-            }]
-          }
-        }
+        // getMenuItems: {}
       }
     },
     computed: {
+      getMenuItems(){
+        // return this.$store.state.meunItems
+        return this.$store.getters.getMenuItems
+      },
       total() {
         let totalCost = 0
         for (let index in this.baskets) {
@@ -126,7 +118,27 @@
       },
       removeFromBasket(item) {
         this.baskets.splice(this.baskets.indexOf(item), 1)
+      },
+      fetchData() {
+        // fetch('https://wd9086734151cepuuy.wilddogio.com/menu.json')
+        //   .then(res => res.json())
+        //   .then(data => {
+        //     console.log(data);
+
+        //     this.getMenuItems = data
+        //     console.log( this.getMenuItems);
+
+        //   })
+        // this.http.get('menu.json')
+        //   .then(res =>{
+        //      this.getMenuItems = res.data
+        //   })
+        this.http.get('menu.json')
+          .then(res => this.$store.commit('setMenuItems', res.data))
       }
+    },
+    created() {
+      this.fetchData()
     }
   }
 

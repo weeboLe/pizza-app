@@ -1,7 +1,7 @@
 <template>
   <header>
     <nav class="navbar navbar-expand-md navbar-light bg-light">
-      <router-link class="py-2" :to="{name:'homeLink'}" >
+      <router-link class="py-2" :to="{name:'homeLink'}">
         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
           stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="d-block mx-auto">
           <circle cx="12" cy="12" r="10"></circle>
@@ -29,11 +29,17 @@
         </li>
       </ul>
       <ul class="navbar-nav ml-auto">
-        <li>
+        <li v-show="!isLogin">
           <router-link :to="{name:'loginLink'}" class="nav-link">登录</router-link>
         </li>
-        <li>
+        <li v-show="!isLogin">
           <router-link :to="{name:'registerLink'}" class="nav-link">注册</router-link>
+        </li>
+        <li v-show="isLogin" class="nav-link">
+          {{currentUser}}
+        </li>
+        <li v-show="isLogin">
+          <router-link :to="{name:'loginLink'}" class="nav-link">[退出]</router-link>
         </li>
       </ul>
     </nav>
@@ -45,7 +51,16 @@
       return {
 
       }
-    }
+    },
+    
+    computed: {
+      currentUser() {
+        return this.$store.getters.currentUser
+      },
+      isLogin() {
+        return this.$store.getters.isLogin
+      },
+    },
   }
 
 </script>

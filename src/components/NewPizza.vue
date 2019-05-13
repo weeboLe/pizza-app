@@ -69,16 +69,26 @@
             }
           ]
         }
-        fetch('https://wd2468178309upkmpi.wilddogio.com/menu.json', {
-            method: "POST",
-            headers: {
-              "Content-type": 'application/json'
-            },
-            body: JSON.stringify(data)
-          })
-          .then(res => {
-            console.log(res)
-          })
+        //https://wd9086734151cepuuy.wilddogio.com/
+        // fetch('https://wd9086734151cepuuy.wilddogio.com/menu.json', {
+        //     method: "POST",
+        //     headers: {
+        //       "Content-type": 'application/json'
+        //     },
+        //     body: JSON.stringify(data)
+        //   })
+        //   .then(res => res.json())
+        //   .then(data => this.$store.commit('pushToMenuItems', data))
+        //   // .then(data => this.$router.push({name:'menuLink'}))
+        //   .catch(err => console.log(err))
+
+        this.http.post('menu.json',data)
+          .then((res) => {
+            this.$store.commit('pushToMenuItems', data)
+            
+          }).catch((err) => {
+            
+          });
       }
     }
   }

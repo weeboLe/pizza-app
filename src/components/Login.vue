@@ -29,6 +29,9 @@
         password: '',
       }
     },
+    beforeRouteEnter(to, from, next) {
+      next(vm => vm.$store.dispatch('setUser', null))
+    },
     methods: {
       onSubmit() {
         if (!!this.password && !!this.password) {
@@ -45,9 +48,12 @@
                 return user.email === this.email && user.password === this.password
               })
               if (result != null && result.length > 0) {
+                this.$store.dispatch('setUser', result[0].email)
                 this.$router.push({
                   name: 'homeLink'
                 })
+              } else {
+                this.$store.dispatch('setUser', null)
               }
             })
         }
